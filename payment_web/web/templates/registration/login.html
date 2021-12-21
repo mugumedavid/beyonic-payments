@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <ul class="nav navbar-right panel_toolbox">
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    {{ page.text | safe }}
+                </div>
+
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+
+                    <section class="panel">
+                        {% if not user.is_authenticated %}
+                            <div class="x_title">
+                                <h2>Payments Portal</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="jubmbotron">
+                                    <form id="demo-form2" data-parsley-validate=""
+                                          class="form-horizontal form-label-left"
+                                          novalidate="" name="LoginForm" method="post" action="{% url 'login' %}">
+                                        {% csrf_token %}
+                                        {% if next %}
+                                            <input type="hidden" name="next" value="{{ next }}"/>
+                                        {% endif %}
+                                        <p >Provide your username and password to access the system.</p>
+                                        {% if form.errors or login_incorrect %}
+                                            <div class="alert alert-warning">
+                                                <p>The username and/or password is not correct.</p>
+                                            </div>
+                                        {% endif %}
+
+                                        {% for field in form %}
+                                            <div class="form-group {% if field.errors %} has-error {% endif %}">
+                                                <label class="col-md-12 col-sm-12 col-xs-12"
+                                                       for="{{ field.id_for_label }}">{{ field.label }}<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    {{ field }}
+                                                </div>
+                                                {%  if field.errors %}
+                                                    {% for error in field.errors %}
+                                                        <p class="help-block list-unstyled col-md-12 col-sm-12 col-xs-12">{{ error }}</p>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-4 col-xs-6">
+                                                    <button type="submit" class="btn btn-primary">Log in</button>
+                                                </div>
+                                                <div class="col-md-6 col-sm-8 col-xs-6">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        {% endif %}
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock %}
+
+{% block main %}
+
+
+    {% if object %}
+        <h1>Update Request</h1>
+        <form action="{% url 'update-request' object.id %}" method="post">
+    {% else %}
+        <h1>Create Request</h1>
+        <form action="{% url 'new-request' %}" method="post">
+    {% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+
+{% endblock %}

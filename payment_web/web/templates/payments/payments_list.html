@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock %}
+
+{% block main %}
+
+  <h1>Payments</h1>
+
+  <a class="" href="{% url 'new-payment' %}">New</a>
+
+  <br />
+  <br />
+
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Transaction ID</th>
+{#          <th scope="col">Amount</th>#}
+          <th scope="col">Date issued</th>
+{#          <th scope="col">Currency</th>#}
+        </tr>
+      </thead>
+      <tbody>
+
+      {% if payments %}
+        {% for payment in payments %}
+            <tr>
+              <td>{{ payment.payment_request }}</td>
+{#              <td>{{ payment.payment_request.amount }}</td>#}
+              <td>{{ payment.date }}</td>
+{#              <td>{{ payment.payment_request.currency }}</td>#}
+              <td><a href="{% url 'update-payment' payment.id %}">edit</a></td>
+            </tr>
+        {% endfor %}
+      {% else %}
+            <p>There are no payments.</p>
+      {% endif %}
+
+      </tbody>
+</table>
+
+{% endblock %}

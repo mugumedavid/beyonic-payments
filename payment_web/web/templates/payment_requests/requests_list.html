@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock %}
+
+{% block main %}
+
+  <h1>Payment Requests</h1>
+
+  <a href="{% url 'new-request' %}">New</a>
+
+  <br />
+  <br />
+
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Transaction ID</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Currency</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% if requests %}
+        {% for request in requests %}
+            <tr>
+              <td><a href="{{ request.get_absolute_url }}">{{ request.transaction_id }}</a></td>
+              <td>{{ request.transaction_id }}</td>
+              <td>{{ request.amount }}</td>
+              <td>{{ request.currency }}</td>
+              <td>{{ request.date }}</td>
+              <td><a href="{% url 'update-request' request.id %}">edit</a></td>
+              <td><a href="{% url 'delete-request' request.id %}">delete</a></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+            <p>There are no payment requests.</p>
+        {% endif %}
+
+      </tbody>
+</table>
+
+{% endblock %}
