@@ -25,8 +25,8 @@ SECRET_KEY = 'u8l($a_8$^+3x)zr=il$#x@0!vavt_hch6zp!!2(q8ugfocnt$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['payment-request-microservice-service']
+#TODO: needs to be environment variable from ConfigMap
 
 # Application definition
 

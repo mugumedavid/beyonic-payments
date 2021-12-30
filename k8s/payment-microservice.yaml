@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-microservice
+spec:
+  selector:
+    matchLabels:
+      app: payment-microservice
+  template:
+    metadata:
+      labels:
+        app: payment-microservice
+    spec:
+      containers:
+      - name: payment-microservice
+        image: payments/payment_service:1.0.1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+          - mountPath: /app/database/
+            name: payment-microservice
+        env:
+          - name: REQUEST_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: payment-config-data
+                key: request_service_url 
+          - name: PAYMENT_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: payment-config-data
+                key: payment_service_url
+      volumes:
+        - name: payment-microservice
+          persistentVolumeClaim:
+            claimName: sqlite-db-pvc

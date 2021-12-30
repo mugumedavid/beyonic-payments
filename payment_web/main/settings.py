@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,7 +93,7 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / '../database/db.sqlite3',
+        'NAME': BASE_DIR / env("DATABASE_PATH", default='../database/db.sqlite3'),
     }
 }
 
@@ -150,5 +155,5 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-REQUEST_SERVICE_URL = 'http://127.0.0.1:8001/payment-request-service/payment-request/'
-PAYMENT_SERVICE_URL = 'http://127.0.0.1:8002/payment-service/payment/'
+REQUEST_SERVICE_URL = env("REQUEST_SERVICE_URL", default="http://127.0.0.1:8001/payment-request-service/payment-request/")
+PAYMENT_SERVICE_URL = env("PAYMENT_SERVICE_URL", default="http://127.0.0.1:8002/payment-service/payment/")

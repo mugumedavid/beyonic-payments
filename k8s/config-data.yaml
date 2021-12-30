@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment-config-data
+data:
+  payment_service_url: http://payment-microservice-service:8002/payment-service/payment/
+  request_service_url: http://payment-request-microservice-service:8001/payment-request-service/payment-request/
+  database_url: database/db.sqlite3

@@ -12,6 +12,9 @@ class PaymentRequestListView(LoginRequiredMixin, generic.TemplateView):
     requests_url = settings.REQUEST_SERVICE_URL
 
     def get(self, request, *args, **kwargs):
-        payment_requests = requests.get(self.requests_url + '?format=json').json()
-        context = {'requests': payment_requests}
+        payment_requests = requests.get(self.requests_url + '?format=json')
+        payment_requests_json = {}
+        if payment_requests:
+            payment_requests_json = payment_requests.json()
+        context = {'requests': payment_requests_json}
         return render(request, "payment_requests/requests_list.html", context=context)

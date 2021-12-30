@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-request-microservice
+spec:
+  selector:
+    matchLabels:
+      app: payment-request-microservice
+  template:
+    metadata:
+      labels:
+        app: payment-request-microservice
+    spec:
+      containers:
+      - name: payment-request-microservice
+        image: payments/payment_request_service:1.0.1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+          - mountPath: /app/database/
+            name: payment-microservice
+      volumes:
+        - name: payment-microservice
+          persistentVolumeClaim:
+            claimName: sqlite-db-pvc

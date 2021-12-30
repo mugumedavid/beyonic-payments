@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-web-service
+spec:
+  selector:
+    app: payment-web
+  ports:
+  - port: 8000
+    targetPort: 8000
